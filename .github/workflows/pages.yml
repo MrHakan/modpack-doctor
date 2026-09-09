@@ -26,6 +26,7 @@ jobs:
           node --check app.js
           node --check zip-utils.js
           node --check pack-core.js
+          node --check pack-extras.js
           node --check lab-ui.js
           node --check tests/smoke.mjs
       - name: Check required static files
@@ -37,6 +38,7 @@ jobs:
           test -f rules.js
           test -f zip-utils.js
           test -f pack-core.js
+          test -f pack-extras.js
           test -f lab-ui.js
           test -f tests/smoke.mjs
           grep -q 'id="analyzeBtn"' index.html
@@ -44,6 +46,7 @@ jobs:
           grep -q 'script src="app.js"' index.html
           grep -q 'script src="zip-utils.js"' index.html
           grep -q 'script src="pack-core.js"' index.html
+          grep -q 'script src="pack-extras.js"' index.html
           grep -q 'script src="lab-ui.js"' index.html
           grep -q 'href="lab.css"' index.html
       - name: Runtime pack scanner smoke test
