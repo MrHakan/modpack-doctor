@@ -22,17 +22,28 @@ jobs:
         uses: actions/checkout@v4
       - name: Check JavaScript syntax
         run: |
-          node --check app.js
           node --check rules.js
+          node --check app.js
+          node --check zip-utils.js
+          node --check pack-core.js
+          node --check lab-ui.js
       - name: Check required static files
         run: |
           test -f index.html
           test -f styles.css
+          test -f lab.css
           test -f app.js
           test -f rules.js
+          test -f zip-utils.js
+          test -f pack-core.js
+          test -f lab-ui.js
           grep -q 'id="analyzeBtn"' index.html
           grep -q 'script src="rules.js"' index.html
           grep -q 'script src="app.js"' index.html
+          grep -q 'script src="zip-utils.js"' index.html
+          grep -q 'script src="pack-core.js"' index.html
+          grep -q 'script src="lab-ui.js"' index.html
+          grep -q 'href="lab.css"' index.html
 
   deploy:
     needs: validate
