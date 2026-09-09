@@ -27,6 +27,7 @@ jobs:
           node --check zip-utils.js
           node --check pack-core.js
           node --check lab-ui.js
+          node --check tests/smoke.mjs
       - name: Check required static files
         run: |
           test -f index.html
@@ -37,6 +38,7 @@ jobs:
           test -f zip-utils.js
           test -f pack-core.js
           test -f lab-ui.js
+          test -f tests/smoke.mjs
           grep -q 'id="analyzeBtn"' index.html
           grep -q 'script src="rules.js"' index.html
           grep -q 'script src="app.js"' index.html
@@ -44,6 +46,25 @@ jobs:
           grep -q 'script src="pack-core.js"' index.html
           grep -q 'script src="lab-ui.js"' index.html
           grep -q 'href="lab.css"' index.html
+      - name: Runtime pack scanner smoke test
+        run: |
+          python - <<'PY'
+          import json, zipfile
+          with zipfile.ZipFile('/tmp/md-fixture.jar','w',zipfile.ZIP_DEFLATED) as z:
+              z.writestr('fabric.mod.json', json.dumps({
+                  'schemaVersion': 1,
+                  'id': 'examplemod',
+                  'name': 'Example Mod',
+                  'version': '1.2.3',
+                  'environment': '*',
+                  'depends': {'fabricloader': '>=0.15.0', 'missinglib': '>=2.0'},
+                  'mixins': ['example.mixins.json'],
+                  'accessWidener': 'example.accesswidener'
+              }))
+              z.writestr('example.mixins.json', json.dumps({'package':'com.example.mixin','mixins':['CommonMixin'],'client':['ClientMixin']}))
+              z.writestr('example.accesswidener', 'accessWidener v2 named\naccessible class net/minecraft/Test\n')
+          PY
+          node tests/smoke.mjs /tmp/md-fixture.jar
 
   deploy:
     needs: validate
