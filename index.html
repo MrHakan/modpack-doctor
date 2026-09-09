@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b1117" />
-  <meta name="description" content="Private, browser-side Minecraft modpack crash log diagnostics." />
+  <meta name="description" content="Private, browser-side Minecraft modpack crash log diagnostics and pack maintenance suite." />
   <title>Modpack Doctor</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="lab.css" />
 </head>
 <body>
   <div class="shell">
@@ -101,12 +102,15 @@
     </main>
 
     <footer>
-      <span>Modpack Doctor MVP · heuristic diagnostics, not magic.</span>
+      <span>Modpack Doctor · browser-side crash triage + pack maintenance suite.</span>
       <span>Always back up your instance before changing mods.</span>
     </footer>
   </div>
 
   <script src="rules.js"></script>
   <script src="app.js"></script>
+  <script src="zip-utils.js"></script>
+  <script src="pack-core.js"></script>
+  <script src="lab-ui.js"></script>
 </body>
 </html>
